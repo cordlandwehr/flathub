@@ -1,0 +1,27 @@
+id: org.kde.kjournaldbrowser
+runtime: org.kde.Platform
+runtime-version: 6.11
+sdk: org.kde.Sdk
+command: kjournaldbrowser
+rename-icon: "utilities-log-viewer"
+finish-args:
+  - --share=ipc
+  - --socket=fallback-x11
+  - --socket=wayland
+  - --device=dri
+  # Browse the system journal
+  - --filesystem=/var/log/journal:ro
+modules:
+  - name: kjournald
+    buildsystem: cmake-ninja
+    config-opts:
+      - -DINSTALL_ICONS=ON
+    sources:
+      - type: archive
+        url: https://download.kde.org/stable/release-service/26.08.1/src/kjournald-26.08.1.tar.xz
+        sha256: 768067c405e4f2b2cb527ffdae0dc27fc311acc191c5cc85fb0108f5f9c73609
+        x-checker-data:
+          type: anitya
+          project-id: 8763
+          stable-only: true
+          url-template: https://download.kde.org/stable/release-service/$version/src/kjournald-$version.tar.xz
